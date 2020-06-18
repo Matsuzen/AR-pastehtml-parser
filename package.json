@@ -1,0 +1,26 @@
+{
+  "name": "arparser",
+  "version": "1.0.0",
+  "description": "App to read through autoref's pastehtmls and store relevant information",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matsuzen/AR-pastehtml-parser.git"
+  },
+  "author": "Matsuzen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matsuzen/AR-pastehtml-parser/issues"
+  },
+  "homepage": "https://github.com/Matsuzen/AR-pastehtml-parser#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "sequelize": "^5.21.13",
+    "sqlite3": "^4.2.0"
+  }
+}
