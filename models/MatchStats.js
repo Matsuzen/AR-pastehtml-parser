@@ -18,9 +18,9 @@ const MatchStats = Sequelize.define("matchStats", {
   kills: Sequelize.INTEGER,
   deaths: Sequelize.INTEGER,
   assists: Sequelize.INTEGER,
-  arrowHits: Sequelize.INTEGER,
+  arrowsHit: Sequelize.INTEGER,
   //Total bow shots fired
-  totalHits: Sequelize.INTEGER,
+  arrowsTotal: Sequelize.INTEGER,
   woolTouches: Sequelize.INTEGER
 }, {
   indexes: [

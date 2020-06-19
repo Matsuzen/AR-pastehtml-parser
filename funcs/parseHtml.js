@@ -20,14 +20,14 @@ async function parseHtml(url) {
   const playerStats = parseStats($);
 
   //Object containing different parts of the parse html
-  const pasteHtml = {
+  const formatedPasteHtml = {
     matchDetails,
     teamMembers,
     woolTouches,
     playerStats
   }
 
-  console.log(pasteHtml)
+  return formatedPasteHtml;
 }
 
 module.exports = parseHtml;
