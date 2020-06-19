@@ -1,3 +1,5 @@
+//Information for one match
+
 const { Sequelize } = require("sequelize");
 
 const Match = Sequelize.define("match", {
@@ -14,6 +16,10 @@ const Match = Sequelize.define("match", {
     allowNull: false
   },
   matchDate: Sequelize.DATETIME,
+  matchLength: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   //There may not be a winner for a given match
   winners: {
     type: Sequelize.STRING,
