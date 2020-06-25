@@ -1,5 +1,7 @@
 /node_modules
 .env
+db.sqlite
 sqlite3.exe
 .sqliterc
 .rest
+client_secret.json
