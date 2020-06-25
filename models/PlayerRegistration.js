@@ -1,8 +1,9 @@
 //Each player registered for individual tournaments
 
+const db = require("./db");
 const { Sequelize } = require("sequelize");
 
-const PlayerRegistration = Sequelize.define("playerRegistration", {
+const PlayerRegistration = db.define("playerRegistration", {
   //Player ID can only be there once per tournament ID
   playerId: {
     type: Sequelize.INTEGER,
@@ -17,7 +18,7 @@ const PlayerRegistration = Sequelize.define("playerRegistration", {
     allowNull: false
   }
 }, {
-  indexes: [{ name: "idx_tournamentId", unique: false, fields: ["tournamentId"] }]
+  indexes: [{ name: "idx_reg_tournamentId", unique: false, fields: ["tournamentId"] }]
 });
 
 module.exports = PlayerRegistration;

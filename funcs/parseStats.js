@@ -1,3 +1,4 @@
+//Make the player stats table a javascript object
 function parseStats($) {
   const statsTable = $("#ar_content .table-bordered:nth-of-type(2)");
 

@@ -1,26 +1,48 @@
 //Find wool touches by going through every line of log
 
-function parseLog($) {
+function parseLog($, playersList) {
   const woolTouches = {};
 
-  $(".transcript-event .message").each(function(i) {
-    const logMessage = $(this).text();
+  //Validation object to make sure each wool is only touched once per team
+  const firstTouches = {};
 
-    const woolTouch = /is carrying the first/.test(logMessage);
+  $(".transcript-event").each(function() {
+    const logMessage = $(this).find(".message").text();
+  
+    const woolLog = logMessage.match(/([A-Z]+) WOOL/);
 
-    //No wool touch, check next line
+    //Line doesn't pertain any wool
+    if(!woolLog) return;
+
+    const woolColor = woolLog[1].toLowerCase();
+
+    //Check if the wool was picked up
+    const woolTouch = /picked up/.test(logMessage);
+
+    //Not a wool touch
     if(!woolTouch) return;
 
     const woolCarrier = $(this).find(".player").text();
+    const carrierTeam = playersList[woolCarrier];
+
+    //Initiate team's object
+    if(!firstTouches[carrierTeam]) firstTouches[carrierTeam] = {};
+
+    //Wool has already been first picked up by team
+    if(firstTouches[carrierTeam][woolColor]) return;
+
+    firstTouches[carrierTeam][woolColor] = woolCarrier;
 
     //Initite array for wool carrier containing every wool color
     //carried by the player
     if(!woolTouches[woolCarrier]) woolTouches[woolCarrier] = [];
 
-    //Find color of wool
-    const woolColor = $(this).find(".block").text().split(" ")[0].toLowerCase();
+    const logTimestamp = $(this).find(".timestamp").text();
 
-    woolTouches[woolCarrier].push(woolColor);
+    woolTouches[woolCarrier].push({
+      woolColor,
+      timestamp: logTimestamp
+    });
   });
 
   return woolTouches;

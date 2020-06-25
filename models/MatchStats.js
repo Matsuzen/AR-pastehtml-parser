@@ -1,8 +1,9 @@
 //Stats for a player for a given match
 
+const db = require("./db");
 const { Sequelize } = require("sequelize");
 
-const MatchStats = Sequelize.define("matchStats", {
+const MatchStats = db.define("matchStats", {
   playerId: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -11,21 +12,16 @@ const MatchStats = Sequelize.define("matchStats", {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  teamId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   kills: Sequelize.INTEGER,
-  deaths: Sequelize.INTEGER,
   assists: Sequelize.INTEGER,
+  deaths: Sequelize.INTEGER,
   arrowsHit: Sequelize.INTEGER,
   //Total bow shots fired
   arrowsTotal: Sequelize.INTEGER,
   woolTouches: Sequelize.INTEGER
 }, {
   indexes: [
-    { name: "idx_matchStats_playerId", unique: false, fields: ["playerId"] },
-    { name: "idx_matchStats_teamId", unique: false, fields: ["teamId"] }
+    { name: "idx_matchStats_playerId", unique: false, fields: ["playerId"] }
   ]
 });
 

@@ -1,0 +1,6 @@
+# Enter the URL OR PATH(pastehtmls/...) of 1 pasteHTML per line
+# Optionally add a space then a tournament name if applicable
+# Lines starting with # won't be taken into consideration
+#http://godgamerstats.s3.amazonaws.com/summary/2020.06.22-21.53.35.html CMCT
+#http://godgamerstats.s3.amazonaws.com/summary/2020.06.14-20.45.10.html CMCT
+#pastehtmls/example.html CMCT

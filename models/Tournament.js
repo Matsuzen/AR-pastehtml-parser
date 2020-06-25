@@ -1,6 +1,7 @@
+const db = require("./db");
 const { Sequelize } = require("sequelize");
 
-const Tournament = Sequelize.define("tournament", {
+const Tournament = db.define("tournament", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
