@@ -3,24 +3,35 @@ const fs = require("fs");
 const readline = require("readline");
 
 const storePasteInfo = require("./storePasteInfo");
+const updateSpreadsheet = require("./updateSpreadsheet");
 
 async function readPastehtmls() {
   const fileStream = fs.createReadStream(__dirname + "/../pastehtmlsToRead");
 
-  const rl = readline.createInterface({
+  const lineReader = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
 
-  rl.on("line", function(line) {
+  let currentPromise;
+
+  fileStream.on("end", async () => {
+    //Wait until the last paste's info are stored before updating the Google sheet
+    await currentPromise;
+    
+    updateSpreadsheet();
+  });
+
+  lineReader.on("line", line => {
     //Line starting by # are comments
     if(line[0] === "#") return;
 
     const [ url, tournamentName ] = line.split(" ");
 
     //Store the relevant info for each pastehtml
-    storePasteInfo(url, tournamentName);
+    currentPromise = storePasteInfo(url, tournamentName);
   });
+
 }
 
 module.exports = readPastehtmls;

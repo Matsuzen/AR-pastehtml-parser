@@ -3,10 +3,8 @@ const WoolTouch = require("../models/WoolTouch");
 
 async function insertWoolTouches(woolTouches, matchId) {
   const newWoolTouches = [];
-  console.log(woolTouches);
 
   for(const woolCarrier in woolTouches) {
-    console.log(woolCarrier);
 
     //Find the player ID of the carrier
     const player = await Player.findOne({ where: { username: woolCarrier } })
@@ -14,7 +12,7 @@ async function insertWoolTouches(woolTouches, matchId) {
       console.log(e);
     }); 
 
-    const playerId = player.dataValues.id;
+    const playerId = player && player.dataValues.id;
 
     const playerWoolTouches = woolTouches[woolCarrier];
 
@@ -29,7 +27,6 @@ async function insertWoolTouches(woolTouches, matchId) {
         console.log(e);
       })
 
-      console.log(newWoolTouch.dataValues);
       newWoolTouches.push(newWoolTouch);
     })
   }

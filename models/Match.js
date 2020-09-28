@@ -40,7 +40,7 @@ const Match = db.define("match", {
     { name: "idx_match_tournamentId", unique: false, fields: ["tournamentId"] }, 
     { name: "idx_mapName", unique: false, fields: ["mapName"] }, 
     { name: "idx_team1", unique: false, fields: ["team1"] },
-    { name: "idx_team2", unique: false, fields: ["team2"] },
+    { name: "idx_team2", unique: false, fields: ["team2"] }
   ]
 });
 

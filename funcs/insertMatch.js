@@ -25,7 +25,7 @@ async function insertMatch(matchDetails, teams, tournamentName) {
       tournamentId,
       matchName,
       mapName,
-      matchDate,
+      matchDate: new Date(matchDate),
       matchLength,
       winners,
       team1: team1.teamName,

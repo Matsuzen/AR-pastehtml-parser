@@ -16,11 +16,16 @@ async function insertStats(playersStats, woolTouches, matchId, tournamentId) {
 
       //Add the username to "Player" if it doesn't already exist
       if(!playerId) {
-        const newPlayer = await Player.create({ 
-          username 
+        const newPlayer = await Player.create({ username })
+        //Same player could already be in creation from another paste
+        .catch(async () => {
+          const player = await Player.findOne({ where: { username }});
+          playerId = player.dataValues.id;
         });
 
-        playerId = newPlayer.dataValues.id;
+        if(newPlayer) {
+          playerId = newPlayer.dataValues.id;
+        }
       }
 
       const playerWoolTouches = (woolTouches[username] && woolTouches[username].length) || 0;
@@ -39,8 +44,8 @@ async function insertStats(playersStats, woolTouches, matchId, tournamentId) {
           playerId,
           tournamentId
         }
-      });
-
+      })
+      
       //Player has no total stats object, create it
       if(!playerStats) {
         const newPlayerStats = await PlayerStats.create({
@@ -53,7 +58,7 @@ async function insertStats(playersStats, woolTouches, matchId, tournamentId) {
         continue;
       }
 
-      //Otherwise update the existing one
+      //Otherwise increment the existing one
       const updatedPlayerStats = await PlayerStats.increment({
         kills, assists, deaths, arrowsHit, arrowsTotal,
         woolTouches: playerWoolTouches

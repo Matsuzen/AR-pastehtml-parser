@@ -7,13 +7,13 @@ const insertWoolTouches = require("./insertWoolTouches");
 async function storePasteInfo(url, tournament) {
   try {
     const { matchDetails, teams, woolTouches, playersStats } = await parseHtml(url);
-    
+  
     const { newMatchId, tournamentId } = await insertMatch(matchDetails, teams, tournament);
   
     const newStats = await insertStats(playersStats, woolTouches, newMatchId, tournamentId);
 
     const newWoolTouches = await insertWoolTouches(woolTouches, newMatchId);
-    
+
   }
   catch(e) {
     console.log(e);

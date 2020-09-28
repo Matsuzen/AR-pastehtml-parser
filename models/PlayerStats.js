@@ -24,7 +24,8 @@ const PlayerStats = db.define("playerStats", {
 }, {
   indexes: [
     { name: "idx_stats_playerId", unique: false, fields: ["playerId"] },
-    { name: "idx_stats_tournamentId", unique: false, fields: ["tournamentId"] }
+    { name: "idx_stats_tournamentId", unique: false, fields: ["tournamentId"] },
+    { name: "idx_stats_playerId_tournamentId", unique: true, fields: ["playerId", "tournamentId"] }
   ]
 });
 

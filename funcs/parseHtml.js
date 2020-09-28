@@ -10,6 +10,7 @@ async function parseHtml(url) {
   let pageHtml;
 
   //Get the remote pastehtml with the url, otherwise the local one
+  //for local, url is the name of the pastehtml in directory
   if(/^(http)/i.test(url)) {
     const res = await axios.get(url)
     pageHtml = res.data;

@@ -5,7 +5,7 @@ const Tournament = db.define("tournament", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: false
+    unique: true
   },
   dateStart: Sequelize.DATE,
   dateEnd: Sequelize.DATE

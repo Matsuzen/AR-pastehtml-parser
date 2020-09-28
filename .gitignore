@@ -1,4 +1,5 @@
 /node_modules
+/pastehtmls
 .env
 db.sqlite
 sqlite3.exe

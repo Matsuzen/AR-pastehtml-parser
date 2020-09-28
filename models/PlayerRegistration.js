@@ -18,7 +18,11 @@ const PlayerRegistration = db.define("playerRegistration", {
     allowNull: false
   }
 }, {
-  indexes: [{ name: "idx_reg_tournamentId", unique: false, fields: ["tournamentId"] }]
+  indexes: [
+    { name: "idx_reg_tournamentId", unique: false, fields: ["tournamentId"] },
+    { name: "idx_reg_playerId", unique: false, fields: ["playerId"] },
+    { name: "idx_reg_teamId", unique: false, fields: ["teamId"] }
+  ]
 });
 
 module.exports = PlayerRegistration;

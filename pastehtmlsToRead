@@ -1,6 +1,30 @@
 # Enter the URL OR PATH(pastehtmls/...) of 1 pasteHTML per line
 # Optionally add a space then a tournament name if applicable
 # Lines starting with # won't be taken into consideration
-#http://godgamerstats.s3.amazonaws.com/summary/2020.06.22-21.53.35.html CMCT
-#http://godgamerstats.s3.amazonaws.com/summary/2020.06.14-20.45.10.html CMCT
-#pastehtmls/example.html CMCT
+#https://rfwranked.s3.amazonaws.com/2020.09.20-17.03.13.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.20-20.40.43.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.20-18.03.21.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-16.53.29.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-16.52.53.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-15.29.42.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.20-19.38.58.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.20-16.44.29.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.20-15.47.21.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-19.11.36.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-18.27.48.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-17.38.43.html Libero
+#http://godgamerstats.s3.amazonaws.com/summary/2020.09.19-16.21.42.html Libero
+#pastehtmls/2020.09.20-14.40.57.html Libero
+#pastehtmls/2020.09.20-13.31.38.html Libero
+#pastehtmls/2020.09.20-12.40.13.html Libero
+#pastehtmls/2020.09.20-11.41.20.html Libero
+#pastehtmls/2020.09.19-14.56.42.html Libero
+#pastehtmls/2020.09.19-14.16.22.html Libero
+#pastehtmls/2020.09.19-12.57.31.html Libero
+#pastehtmls/2020.09.19-12.53.22.html Libero
+#pastehtmls/2020.09.19-11.59.41.html Libero
+#pastehtmls/2020.09.19-11.54.06.html Libero
+#https://rfwranked.s3.amazonaws.com/2020.09.20-17.42.35.html Libero
+#https://rfwranked.s3.amazonaws.com/2020.09.20-15.36.15.html Libero
+#https://rfwranked.s3.amazonaws.com/2020.09.19-18.56.18.html Libero
+#https://rfwranked.s3.amazonaws.com/2020.09.19-18.16.03.html Libero

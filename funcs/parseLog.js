@@ -19,7 +19,6 @@ function parseLog($, playersList) {
     //Check if the wool was picked up
     const woolTouch = /picked up/.test(logMessage);
 
-    //Not a wool touch
     if(!woolTouch) return;
 
     const woolCarrier = $(this).find(".player").text();
