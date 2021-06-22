@@ -7,21 +7,25 @@ const Tournament = require("../models/Tournament");
 async function exportStats(orderBy = "kills", tournamentName, page) {
 
   const orders = {
-    kills: true,
-    assists: true,
-    deaths: true,
-    arrowsHit: true,
-    arrowsTotal: true,
-    accuracy: true,
-    woolTouches: true
+    kills: "kills",
+    tntkills: "TntKills",
+    assists: "assists",
+    deaths: "deaths",
+    arrowshit: "arrowsHit",
+    arrowstotal: "arrowsTotal",
+    accuracy: "accuracy",
+    wooltouches: "woolTouches",
+    matches: "matches"
   }
 
   const error = {
     err: true
   }
 
+  const order = orders[orderBy.toLowerCase()];
+
   //Invalid order parameter
-  if(!orders[orderBy]) {
+  if(!order) {
     error.message = "Invalid order specified";
     return error;
   }
@@ -40,39 +44,45 @@ async function exportStats(orderBy = "kills", tournamentName, page) {
 
   //Find the stats for players of given tournament
   let statsQuery = `SELECT p.username, 
-    ps.kills, ps.assists, ps.deaths, ps.arrowsHit, ps.arrowsTotal, ps.arrowsHit * 100 /ps.arrowsTotal AS accuracy, ps.woolTouches,
-    (SELECT COUNT(ms.id) FROM matchStats AS ms WHERE ms.playerId = p.id) AS matchCount
-    FROM playerStats as ps, players as p, tournaments as t
-    WHERE ps.playerId = p.id
-    AND ps.tournamentId = t.id
-    AND t.name = ?
-    ORDER BY ps.${orderBy} DESC`;
+    SUM(ms.kills) kills, SUM(ms.tntKills), SUM(ms.assists) assists, SUM(ms.deaths) deaths, SUM(ms.arrowsHit) arrowsHit, SUM(ms.arrowsTotal) arrowsTotal, 
+    CAST((SUM(ms.arrowsHit) * 100 / SUM(ms.arrowsTotal)) AS UNSIGNED) accuracy, 
+    SUM(ms.woolTouches) woolTouches,
+    COUNT(ms.id) matches
+    FROM players AS p, matches AS m, matchStats AS ms, tournaments AS t
+    WHERE ms.playerId = p.id
+    AND ms.matchId = m.id
+    AND m.tournamentId = t.id
+    AND REPLACE(t.name, ' ', '') = REPLACE(?, ' ', '')
+    GROUP BY p.username
+    ORDER BY ${order} DESC`;
 
   //Append limit to query
   if(page) {
-    const lowerLimit = (page - 1) * 20;
-    const upperLimit = page * 20;
+    page = parseInt(page);
 
-    statsQuery += ` LIMIT ${lowerLimit}, ${upperLimit}`;
+    const offset = (page - 1) * 20;
+
+    statsQuery += ` LIMIT ${offset}, 20`;
   }
 
-  let errMessage; 
+  try {
+    const statsResult = await db.query(statsQuery, 
+      { 
+        replacements: [tournamentName],
+        type: QueryTypes.SELECT 
+      }
+    )
 
-  const statsResult = await db.query(statsQuery, 
-    { 
-      replacements: [tournamentName],
-      type: QueryTypes.SELECT 
+    return {
+      data: statsResult
     }
-  )
-  .catch(e => {
-    errMessage = `Something wrong happened while fetching stats from the db: ${e}`;
-  });
-
-  return statsResult;
-
-  /* const fileContent = errMessage || JSON.stringify(statsResult, null, "\t");
-
-  fs.writeFileSync("../playersStats.json", fileContent); */
+  }
+  catch(e) {
+    return {
+      err: true,
+      message: `Something wrong happened while fetching stats from the db: ${e}` 
+    }
+  }
 
 }
 
