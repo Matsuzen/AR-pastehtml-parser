@@ -15,21 +15,30 @@ async function readPastehtmls() {
 
   let currentPromise;
 
-  fileStream.on("end", async () => {
+  let sheetTournament;
+
+  /* fileStream.on("end", async () => {
     //Wait until the last paste's info are stored before updating the Google sheet
     await currentPromise;
     
     updateSpreadsheet();
-  });
+  }); */
 
   lineReader.on("line", line => {
     //Line starting by # are comments
     if(line[0] === "#") return;
 
-    const [ url, tournamentName ] = line.split(" ");
+    const splitLine = line.split(" ");
 
+    const url = splitLine[0];
+
+    const tournamentName = splitLine.slice(1).join(" ");
+
+    sheetTournament = tournamentName;
+    
     //Store the relevant info for each pastehtml
     currentPromise = storePasteInfo(url, tournamentName);
+
   });
 
 }
