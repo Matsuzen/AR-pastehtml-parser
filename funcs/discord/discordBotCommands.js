@@ -2,67 +2,51 @@
 
 !lb [ kills ] [ page ] [ tournamentName ]
 !user [ username ]
-!match [ team1 ] [ team2 ]
+
+!addtournament [ name ] [ dateStart ] [ dateEnd ]
+!addstats [ url ] [ tournamentName ]
+!findmatch [ team1 ] [ team2 ] optionals: [ tournamentName ] [ mapName ]
+!removeMatch [ matchId ]
 
 */
 
-const exportStats = require("../exportStats");
+let commands, commandRoles;
 
-const commands = {
-  lb: doLeaderBoard,
-
-}
+const initCommands = require("./initCommands");
+initCommands().then(commandRes => {
+  commands = commandRes.commands;
+  commandRoles = commandRes.commandRoles
+})
 
 async function discordBotCommands(message) {
-  //Not a command
-  if(message.content[0] !== "!") return;
 
-  const splitMsg = message.content.replace("!", "").split(" ");
-  const [ command, param, param2, param3 ] = splitMsg;
+  //Not a command
+  if(message.content[0] !== commands.Prefix) return;
+
+  //Split the discord message. First word is the command and the rest are parameters for each command
+  const splitMsg = message.content.replace(commands.Prefix, "").split(" ");
+  const [ command, ...params ] = splitMsg;
 
   const commandFunc = commands[command];
 
   if(!commandFunc) return;
 
-  const commandResponse = await commandFunc(param, param2, param3)
-  .catch(e => console.log(e));
+  try {
 
-  message.channel.send({ embed: commandResponse })
+    const commandResponse = await commandFunc(message, params, command);
 
-}
+    //err is always a string
+    if(commandResponse.err) {
+      return message.channel.send(commandResponse.message);      
+    } 
 
-async function doLeaderBoard(sortBy = "kills", page = 1, tournamentName = "Ranked") {
-  const stats = await exportStats(sortBy, tournamentName, page);
-  
-  const embedOptions = {
-    title: `${tournamentName} stats`,
-    description: "",
-    fields: []
+    //Command response can be different based on the command (String, embed, etc)
+    message.channel.send(commandResponse);
+  } 
+  catch(e) {
+    message.channel.send(`Could not execute command (${command}): ${e}`)
   }
-  
-  const headers = ["Kills", "Assists", "Deaths", "Arrows (acc%)", "Touches", "Matches"];
 
-  //Insert each stat listed as headers
-  headers.forEach((statName, i) => {
-
-    embedOptions.description += `${statName}`
-
-    if(i < headers.length - 1) {
-      embedOptions.description += " - ";
-    } else {
-      embedOptions.description += "\n";
-    }
-  })
-
-
-  stats.forEach(({ username, kills, assists, deaths, arrowsHit, arrowsTotal, accuracy, woolTouches, matchCount }, i) => {
-    embedOptions.fields.push({
-      name: "\u200b",
-      value: `${i + 1}: ${username} - ${kills} - ${assists} - ${deaths} - ${arrowsHit} / ${arrowsTotal} (${accuracy}%) - ${woolTouches} - ${matchCount} \n`
-    })
-  });
-
-  return embedOptions;
 }
 
 module.exports = discordBotCommands;
