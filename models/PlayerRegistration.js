@@ -21,7 +21,8 @@ const PlayerRegistration = db.define("playerRegistration", {
   indexes: [
     { name: "idx_reg_tournamentId", unique: false, fields: ["tournamentId"] },
     { name: "idx_reg_playerId", unique: false, fields: ["playerId"] },
-    { name: "idx_reg_teamId", unique: false, fields: ["teamId"] }
+    { name: "idx_reg_teamId", unique: false, fields: ["teamId"] },
+    { name: "idx_reg_playerId_tournamentId", unique: true, fields: ["playerId", "tournamentId"] }
   ]
 });
 

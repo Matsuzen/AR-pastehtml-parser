@@ -13,6 +13,7 @@ const MatchStats = db.define("matchStats", {
     allowNull: false
   },
   kills: Sequelize.INTEGER,
+  tntKills: Sequelize.INTEGER,
   assists: Sequelize.INTEGER,
   deaths: Sequelize.INTEGER,
   arrowsHit: Sequelize.INTEGER,
@@ -21,7 +22,8 @@ const MatchStats = db.define("matchStats", {
   woolTouches: Sequelize.INTEGER
 }, {
   indexes: [
-    { name: "idx_matchStats_playerId", unique: false, fields: ["playerId"] }
+    { name: "idx_matchStats_playerId", unique: false, fields: ["playerId"] },
+    { name: "idx_matchStats_matchId", unique: false, fields: ["matchId"] }
   ]
 });
 

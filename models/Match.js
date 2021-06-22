@@ -8,6 +8,14 @@ const Match = db.define("match", {
     type: Sequelize.INTEGER,
     allowNull: true
   },
+  pasteName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  pasteUrl: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   matchName: {
     type: Sequelize.STRING,
     allowNull: false
@@ -36,6 +44,7 @@ const Match = db.define("match", {
   }
 }, {
   indexes: [
+    { name: "idx_pasteName", unique: true, fields: ["pasteName"] }, 
     { name: "idx_matchName", unique: false, fields: ["matchName"] }, 
     { name: "idx_match_tournamentId", unique: false, fields: ["tournamentId"] }, 
     { name: "idx_mapName", unique: false, fields: ["mapName"] }, 

@@ -14,7 +14,8 @@ const Team = db.define("team", {
     allowNull: false
   }
 }, {
-  indexes: [{ name: "idx_team_tournamentId", unique: false, fields: ["tournamentId"] }]
+  indexes: [{ name: "idx_team_tournamentId", unique: false, fields: ["tournamentId"] }],
+  indexes: [{ name: "idx_team_name_tournamentId", unique: true, fields: ["name","tournamentId"] }]
 });
 
 module.exports = Team;

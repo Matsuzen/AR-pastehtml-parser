@@ -4,13 +4,21 @@ const db = require("./db");
 const { Sequelize } = require("sequelize");
 
 const Player = db.define("player", {
+  uuid: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: false
+  },
   username: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: false
   },
 }, {
-  indexes: [{ name: "idx_playerName", unique: true, fields: ["username"] }]
+  indexes: [
+    { name: "idx_playerName", unique: true, fields: ["username"] },
+    { name: "idx_playerUuid", unique: false, fields: ["uuid"]}
+  ]
 });
 
 module.exports = Player;
