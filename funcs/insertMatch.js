@@ -1,5 +1,7 @@
 const Match = require("../models/Match");
 const Tournament = require("../models/Tournament");
+
+const fs = require("fs");
  
 async function insertMatch(matchDetails, teams, tournamentName) {
   //Tournament name given, find the ID
@@ -15,7 +17,7 @@ async function insertMatch(matchDetails, teams, tournamentName) {
     tournamentId = tournamentRes && tournamentRes.dataValues.id;
   }
 
-  const { matchName, mapName, matchDate, matchLength, winners } = matchDetails;
+  const { pasteName, pasteUrl, matchName, mapName, matchDate, matchLength, winners } = matchDetails;
 
   const [ team1, team2 ] = teams;
 
@@ -23,6 +25,8 @@ async function insertMatch(matchDetails, teams, tournamentName) {
   
     const newMatch = await Match.create({
       tournamentId,
+      pasteName,
+      pasteUrl,
       matchName,
       mapName,
       matchDate: new Date(matchDate),
@@ -31,8 +35,6 @@ async function insertMatch(matchDetails, teams, tournamentName) {
       team1: team1.teamName,
       team2: team2.teamName
     });
-
-    console.log(newMatch.dataValues);
 
     //Return match & tournament IDs to store stats
     return {
@@ -43,6 +45,10 @@ async function insertMatch(matchDetails, teams, tournamentName) {
   }
   catch(e) {
     console.log(e);
+
+    fs.appendFile(`${__dirname}/../errors`, `${e}\n`, err => {
+      if(err) throw err;
+    })
   }
 
 }
