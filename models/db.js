@@ -1,8 +1,10 @@
 const Sequelize = require("sequelize");
 
-const db = new Sequelize({
-  dialect: "sqlite",
-  storage: "db.sqlite"
+const { DB_NAME, DB_USERNAME, DB_PW, DB_DIALECT, DB_HOST } = process.env;
+
+const db = new Sequelize(DB_NAME, DB_USERNAME, DB_PW, {
+  dialect: DB_DIALECT,
+  host:  DB_HOST
 });
 
 db.sync();
